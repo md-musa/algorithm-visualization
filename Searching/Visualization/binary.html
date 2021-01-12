@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      #array-con {
+        display: flex;
+        justify-content: center;
+      }
+      .element {
+        height: 24px;
+        /* width: 70px; */
+        border: solid 1px #bfbfbf;
+        border-radius: 5px;
+        margin: 1px;
+        /* font-size: 50px; */
+        text-align: center;
+      }
+      .scope {
+        outline: none;
+      }
+      .scope::after {
+        content: "^";
+        position: absolute;
+        top: 56px;
+        margin: -1px -18px;
+        font-size: 32px;
+        font-weight: bold;
+        color: #f9da02;
+      }
+      .targeter {
+        height: 49px;
+        display: flex;
+        align-items: center;
+      }
+    </style>
+  </head>
+  <body>
+    <input type="number" placeholder="enter value for search" />
+    <button>Search</button>
+
+    <div id="array-con"></div>
+
+    <script>
+      const arrCon = document.getElementById("array-con");
+      const arr = [
+        10,
+        20,
+        30,
+        40,
+        50,
+        60,
+        70,
+        80,
+        90,
+        100,
+        110,
+        120,
+        130,
+        140,
+        150,
+        160,
+        170,
+        180,
+        190,
+        200,
+        210,
+        220,
+        230,
+        240,
+        250,
+        260,
+        270,
+        280,
+        290,
+        300,
+        303,
+        306,
+        308,
+        309,
+        340,
+        380,
+        390,
+        400,
+        480,
+        480,
+        490,
+        500,
+        505,
+        506,
+        509,
+      ];
+      (function (arr) {
+        for (let i = 0; i < arr.length; ++i) {
+          const a = `<div class= 'element'> ${arr[i]}</div>`;
+          arrCon.insertAdjacentHTML("beforeEnd", a);
+        }
+      })(arr);
+
+      function binsearch(arr, find, low, high) {
+        for (let i = 0; i < arr.length; ++i) {
+          arrCon.children[i].classList.remove("scope", "targeter");
+        }
+        if (low > high) return;
+        let mid = parseInt((low + high) / 2);
+        arrCon.children[low].classList.add("scope");
+        arrCon.children[high].classList.add("scope");
+        arrCon.children[mid].classList.add("targeter");
+
+        if (find === arr[mid]) {
+          console.log(`index = ${mid}, element = ${arr[mid]}`);
+          console.log("stoped");
+          return;
+        }
+        if (find < arr[mid]) {
+          setTimeout(() => binsearch(arr, find, low, mid - 1), 1000);
+        } else {
+          setTimeout(() => binsearch(arr, find, mid + 1, high), 1000);
+        }
+      }
+
+      const input = document.querySelector("input");
+      document.querySelector("button").addEventListener("click", () => {
+        binsearch(arr, parseInt(input.value), 0, arr.length - 1);
+      });
+    </script>
+  </body>
+</html>
